@@ -15,7 +15,7 @@
         <!— Fixed navbar —>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
           <div class="container-fluid">
-            <a class="navbar-brand fs-3" href="index.html">Ask me!</a>
+            <a class="navbar-brand fs-3" href="#">Ask me!</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,18 +24,10 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">ASK</button>
               </form>
-              <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="../static/img/avatar2.png" alt="Avatar" class="rounded-circle" width="50" height="50">
-                    User Name
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Log Out</a></li>
-                  </ul>
-                </li>
-              </ul>
+              <div class="navbar-nav ms-auto mb-2 mb-md-0">
+                <a href="login.html"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+                <a href="register.html"><button type="button" class="btn btn-success">Register</button></a>
+              </div>
             </div>
           </div>
         </nav>
@@ -57,7 +49,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="*****">
                       </div>
 
                       <button type="submit" class="btn btn-primary">Login</button>
@@ -67,18 +59,49 @@
                     </form>
                 </div>
             </div>
-            <div class="col-3">
-              <h1 class="mt-5">Popular Tags</h1>
-              <div class="row">
-                <div class="col-4"><h2><a href="#">python</a> </h2></div>
-                <div class="col-4"><h2><a href="#">python</a></h2></div>
-                <div class="col-4"><h2><a href="#">python</a></h2></div>
-              </div>
-              <div class="mt-5">
-                <h1>Best members</h1>
-                <h2><a href="#">member 1</a></h2><br>
-                <h2><a href="#">member 2</a></h2><br>
-                <h2><a href="#">member 3</a></h2><br>
+            <div class="col-3 mt-5">
+              <div class="p-3">
+                <h3 class="font-italic">Popular Tags</h3>
+                  <div class="d-flex flex-row">
+                      <div class="col text-left">
+                          <a href="#" class="link-primary">perl</a>
+                      </div>
+                      <div class="col text-left">
+                          <a href="#" class="link-secondary">python</a>
+                      </div>
+                      <div class="col text-left">
+                          <a href="#" class="link-success">TechnoPark</a>
+                      </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-around">
+                      <div class="col text-left">
+                          <a href="#" class="link-warning">MySQL</a>
+                      </div>
+                      <div class="col text-left">
+                          <a href="#" class="link-danger">django</a>
+                      </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-around">
+                      <div class="col text-left">
+                          <a href="#" class="link-info">Mail.ru</a>
+                      </div>
+                      <div class="col text-left">
+                          <a href="#" class="link">Voloshin</a>
+                      </div>
+                      <div class="col text-left">
+                          <a href="#" class="link-dark">Firefox</a>
+                      </div>
+                </div>
+                </div>
+              <div class="p-3">
+                <h4>Best Members</h4>
+                <ol class="list-unstyled">
+                  <li><a href="#">Mr.Freeman</a></li>
+                  <li><a href="#">Dr.House</a></li>
+                  <li><a href="#">Bender</a></li>
+                  <li><a href="#">Queen Victoria</a></li>
+                  <li><a href="#">V. Pupkin</a></li>
+                </ol>
               </div>
             </div>
           </div>
