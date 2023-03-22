@@ -24,7 +24,19 @@ main > .container {
     width: 150px;
 }
 
+.question-avatar_post {
+    height: 50px;
+    width: 50px;
+}
+
 .question-avatar > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.question-avatar_post > img {
     height: 100%;
     width: 100%;
     object-fit: cover;
