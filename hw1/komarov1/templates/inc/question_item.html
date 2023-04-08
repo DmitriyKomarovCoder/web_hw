@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="question">
+    <div class="row">
+      <div class="col-3">
+        <div class="question-avatar">
+          <img src="{% static "img/istockphoto-1331350715-170667a.jpg" %}" alt="avatar">
+
+        </div>
+      </div>
+      <div class="col-6">
+        <h2><a href="{% url "question" question.id %}">{{ question.title }}</a></h2>
+        <div class="question-text"> {{ question.text }} </div>
+        <div class="row">
+          <div class="col-4">
+            Answers (3)
+          </div>
+          <div class="col-6">
+            Tags: <a href="#">black_jack</a>, <a href="#">black_jack</a>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-1 ml-3" >
+            <div class="btn-group-vertical" role="group" aria-label="Rating">
+                <button type="button" class="btn btn-outline-success btn-sm">+</button>
+                <input type="text" readonly class="form-control-plaintext border-dark" value="5">
+                <button type="button" class="btn btn-outline-danger btn-sm">-</button>
+            </div>
+      </div>
+    </div>
+</div>

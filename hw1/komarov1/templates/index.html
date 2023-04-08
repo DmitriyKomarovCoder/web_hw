@@ -1,0 +1,13 @@
+{% extends "inc/base.html" %}
+
+{% block content %}
+<div class="mt-5">
+    <div class="py-3 mb-3 border-bottom">
+        <h2 style="display: inline-block">New Question</h2>
+        <a href="hot"> Hot Question</a>
+    </div>
+    {% for question in questions %}
+        {% include "inc/question_item.html" %}
+    {% endfor %}
+</div>
+{% endblock content %}
