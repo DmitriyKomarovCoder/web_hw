@@ -6,7 +6,7 @@
     <head>
       <meta charset="utf-8">
 
-      <title>Sticky Footer Navbar Template · Bootstrap v5.3</title>
+      <title>Ask me</title>
       <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
 
       <!— Custom styles for this template —>
@@ -18,19 +18,21 @@
     <!— Fixed navbar —>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand fs-3" href="index">Ask me!</a>
+        <a class="navbar-brand fs-3" href="{% url "index" %}">Ask me!</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
+
           <form class="d-flex mx-left col-4" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">ASK</button>
           </form>
           <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="../static/img/avatar2.png" alt="Avatar" class="rounded-circle" width="50" height="50">
+                <img src="{% static "/img/avatar2.png" %}" alt="Avatar" class="rounded-circle" width="50" height="50">
                 User Name
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -54,7 +56,9 @@
 
         </div>
         <div class="col-3 mt-5">
+
           <div class="p-3">
+
             <h3 class="font-italic">Popular Tags</h3>
               <div class="d-flex flex-row">
                   <div class="col text-left">
@@ -86,7 +90,7 @@
                       <a href="#" class="link-dark">Firefox</a>
                   </div>
             </div>
-            </div>
+          </div>
           <div class="p-3">
             <h4>Best Members</h4>
             <ol class="list-unstyled">
@@ -113,13 +117,15 @@
       </div>
 
     </div>
+
   </main>
   <footer class="footer mt-auto py-3 bg-light">
     <div class="container">
       <span class="text-muted">Place sticky footer content here.</span>
     </div>
   </footer>
-  <script src="{% static "js/bootstrap.bundle.js" %}" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
 </html>

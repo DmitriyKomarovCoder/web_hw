@@ -22,11 +22,12 @@
         </div>
       </div>
       <div class="col-1 ml-3" >
-            <div class="btn-group-vertical" role="group" aria-label="Rating">
-                <button type="button" class="btn btn-outline-success btn-sm">+</button>
-                <input type="text" readonly class="form-control-plaintext border-dark" value="5">
-                <button type="button" class="btn btn-outline-danger btn-sm">-</button>
-            </div>
+          <div class="btn-group-vertical" role="group" aria-label="rating">
+            <button type="button" class="btn btn-outline-success btn-sm">+</button>
+            <input type="text" readonly class="form-control-plaintext border-dark" value={{ question.rating }}>
+            <button type="button" class="btn btn-outline-danger btn-sm">-</button>
+        </div>
+
       </div>
     </div>
 </div>

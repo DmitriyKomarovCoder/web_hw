@@ -19,7 +19,10 @@ from django.urls import path
 from askme import views
 
 urlpatterns = [
+
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
-    path('question/<int:question_id>/', views.question, name="question")
+    path('question/<int:question_id>/', views.question, name="question"),
+    path('hot/', views.hot, name="hot"),
+    path('tag/<name_tag>/', views.tag, name="tag")
 ]
