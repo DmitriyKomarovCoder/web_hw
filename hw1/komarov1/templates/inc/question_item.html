@@ -16,7 +16,7 @@
             Answers (3)
           </div>
           <div class="col-6">
-            Tags: <a href="#">black_jack</a>, <a href="#">black_jack</a>
+            Tags: {% for tag in question.tags %}<a href="{% url "tag" tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
           </div>
 
         </div>

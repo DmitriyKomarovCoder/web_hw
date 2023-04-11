@@ -9,6 +9,9 @@
 
     {% for question in questions %}
         {% include "inc/question_item.html" %}
+
     {% endfor %}
+
 </div>
+{% include "inc/pagination.html" %}
 {% endblock content %}
