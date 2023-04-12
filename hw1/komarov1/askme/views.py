@@ -1,15 +1,18 @@
-from . import models
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Profile, Question, Answer, Tag, LikeQuestion, LikeAnswer
 
 # Create your views here.
 def index(request):
-    questions_page = paginate(models.QUESTIONS, request)
-    context = {'questions': questions_page, 'tags': models.TAGS}
+    questions_page = Question.objects.all().prefetch_related('author', 'tag')
+    questions = paginate(questions_page, request)
+    tags_page = Tag.objects.most_popular()
+    context = {'questions': questions, 'tags': tags_page}
     return render(request, "index.html", context)
 
 def question(request, question_id):
+    tags_page = Tag.objects.most_popular()
     if question_id >= len(models.QUESTIONS):
         return HttpResponseNotFound('Invalid question ID')
     context = {'question': models.QUESTIONS[question_id],
