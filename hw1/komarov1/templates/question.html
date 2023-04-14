@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-3">
       <div class="question-avatar">
-        <img src="{% static "/img/istockphoto-1331350715-170667a.jpg" %}" alt="avatar">
+        <img src={{ question.author.avatar.url }} alt="avatar">
 
       </div>
     </div>
@@ -16,10 +16,10 @@
         <div class="question-text"> {{ question.text }} </div>
         <div class="row">
           <div class="col-4">
-            Answers (3)
+            Answers ({{ question.num_answers }})
           </div>
           <div class="col-6">
-            Tags: {% for tag in question.tags %}<a href="{% url "tag" tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+            Tags: {% for tag in question.tag.all %}<a href="{% url "tag" tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 
           </div>
 
@@ -34,11 +34,11 @@
   {% for answer in answers %}
     {% include "inc/answer_item.html" %}
   {% endfor %}
+{% include "inc/pagination.html" with object_paginator=answers%}
 <div style="border-top: 1px solid black; margin-bottom: 50px; margin-top: 50px "></div>
 <div class="NewAnswer">
     <h4>You answer</h4>
   <textarea class="form-control" id="NewQuestionText" rows="6" placeholder="Your answer"></textarea>
   <div class="NewAnswer mt-3 mb-3"><button class="btn btn-primary" type="submit">Answer</button></div>
 </div>
-
 {% endblock content %}

@@ -18,8 +18,9 @@ class Command(BaseCommand):
         profiles = []
         for i in range(1, ratio + 1):
             user = User.objects.create(username=f'user{i}')
-            profile = Profile.objects.create(user=user, name=f'User {i}', avatar='default-avatar.png')
+            profile = Profile(user=user, name=f'User {i}', avatar='default-avatar.png')
             profiles.append(profile)
+        Profile.objects.bulk_create(profiles)
 
         tags = [Tag(name=f'Tag {i}') for i in range(1, ratio+1)]
         Tag.objects.bulk_create(tags)
@@ -28,37 +29,38 @@ class Command(BaseCommand):
         for i in range(1, ratio * 10 + 1):
             question = Question(title=f'Title {i}', text=f'Text {i}', author=choice(profiles))
             question.save()
-            question.tag.add(*sample(tags, len(tags)))
+            question.tag.add(*sample(tags, 3))
             questions.append(question)
 
         answers = []
         for i in range(1, ratio * 100 + 1):
             answer = Answer(author=choice(profiles), text=f'Text {i}', question=choice(questions))
-            answer.save()
             answers.append(answer)
+        Answer.objects.bulk_create(answers)
+
+        #like_questions = [LikeQuestion(user=profile, question=question, estimation=choice([True, False]))
+        #                  for profile in profiles for question in questions]
+        #LikeQuestion.objects.bulk_create(like_questions)
+
+        #like_answers = [LikeAnswer(user=profile, answer=answer, estimation=choice([True, False]))
+        #                for profile in profiles for answer in answers]
+        #LikeAnswer.objects.bulk_create(like_answers)
 
         like_questions = []
         for profile in profiles:
             for question in questions:
-                like_question, created = LikeQuestion.objects.get_or_create(
-                    user=profile, question=question,
-                    defaults={'user': profile, 'question': question}
-                )
-                if created:
-                    like_questions.append(like_question)
+                if len(like_questions) >= ratio * 100:
+                    break
+                like_questions.append(LikeQuestion(user=profile, question=question, estimation=choice([True, False])))
 
         LikeQuestion.objects.bulk_create(like_questions)
 
         like_answers = []
         for profile in profiles:
             for answer in answers:
-                like_answer, created = LikeAnswer.objects.get_or_create(
-                    user=profile, answer=answer,
-                    defaults={'user': profile, 'answer': answer}
-                )
-                if created:
-                    like_answers.append(like_answer)
+                if len(like_answers) >= ratio * 100:
+                    break
+                like_answers.append(LikeAnswer(user=profile, answer=answer, estimation=choice([True, False])))
 
         LikeAnswer.objects.bulk_create(like_answers)
-
         self.stdout.write(self.style.SUCCESS(f'Successfully added {ratio} users, {len(questions)} questions, {len(answers)} answers, {len(tags)} tags, {len(like_questions + like_answers)} likes'))

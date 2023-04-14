@@ -13,5 +13,5 @@
     {% endfor %}
 
 </div>
-{% include "inc/pagination.html" %}
+{% include "inc/pagination.html" with object_paginator=questions%}
 {% endblock content %}
