@@ -90,7 +90,7 @@ class ProfileManager(models.Manager):
 # ========================================================================
 class Question(models.Model):
     title = models.CharField(max_length=255)
-    text = models.TextField()
+    text = models.TextField(max_length=500)
     date_create = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     author = models.ForeignKey('Profile', on_delete=models.CASCADE)
@@ -103,7 +103,7 @@ class Question(models.Model):
     objects = QuestionManager()
 class Answer(models.Model):
     author = models.ForeignKey('Profile', on_delete=models.CASCADE)
-    text = models.TextField()
+    text = models.TextField(max_length=500)
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
     score = models.IntegerField(default=0)
@@ -122,7 +122,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     last_update = models.DateTimeField(auto_now=True)
-    avatar = models.ImageField(upload_to='static/img')
+    avatar = models.ImageField(upload_to='static/img', default='static/img/avatar2.png')
     score = models.IntegerField(default=0)
 
     def __str__(self):

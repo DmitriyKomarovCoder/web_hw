@@ -7,14 +7,6 @@ from askme.models import Profile, Question, Answer, Tag, LikeQuestion, LikeAnswe
 
 
 class Command(BaseCommand):
-    help = 'Fill database with sample data'
-
-    def add_arguments(self, parser):
-        parser.add_argument('ratio', type=int, help='Number of entities to create for each user')
-
-    def handle(self, *args, **options):
-        ratio = options['ratio']
-
         profiles = []
         for i in range(1, ratio + 1):
             user = User.objects.create(username=f'user{i}')

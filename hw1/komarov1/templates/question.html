@@ -1,6 +1,6 @@
 {% extends "inc/base.html" %}
 {% load static %}
-
+{% load bootstrap5 %}
 {% block content %}
 
 <div class="question_main mt-5">
@@ -35,10 +35,15 @@
     {% include "inc/answer_item.html" %}
   {% endfor %}
 {% include "inc/pagination.html" with object_paginator=answers%}
-<div style="border-top: 1px solid black; margin-bottom: 50px; margin-top: 50px "></div>
-<div class="NewAnswer">
-    <h4>You answer</h4>
-  <textarea class="form-control" id="NewQuestionText" rows="6" placeholder="Your answer"></textarea>
-  <div class="NewAnswer mt-3 mb-3"><button class="btn btn-primary" type="submit">Answer</button></div>
-</div>
+{% if user.is_authenticated %}
+  <div style="border-top: 1px solid black; margin-bottom: 50px; margin-top: 50px "></div>
+  <div class="NewAnswer">
+      <h4>You answer</h4>
+    <form rows="6" action="{% url 'question_page' question_id=question.id page_num=page_num %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <div class="NewAnswer mt-3 mb-3"><button class="btn btn-primary" type="submit">Answer</button></div>
+    </form>
+  </div>
+{% endif %}
 {% endblock content %}

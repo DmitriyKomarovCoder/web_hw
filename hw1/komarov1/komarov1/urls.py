@@ -18,13 +18,19 @@ from django.contrib import admin
 from django.urls import path
 from askme import views
 
+app_name = 'askme'
+
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
+
     path('question/<int:question_id>/', views.question, name="question"),
+    path('question/<int:question_id>/page/<int:page_num>', views.question, name='question_page'),
+
     path('hot/', views.hot, name="hot"),
     path('tag/<name_tag>/', views.tag, name="tag"),
-    path('login/', views.login, name="login"),
+    path('login/', views.log_in, name="login"),
+    path('logout/', views.log_out, name="logout"),
     path('register/', views.register, name="register"),
     path('ask/', views.ask, name="ask"),
     path('settings/', views.settings, name="settings")

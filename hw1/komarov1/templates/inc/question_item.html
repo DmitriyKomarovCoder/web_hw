@@ -10,7 +10,6 @@
       </div>
       <div class="col-6">
         <h2><a href="{% url "question" question.id %}">{{ question.title }}</a></h2>
-        <div class="question-text"> {{ question.text }} </div>
         <div class="row">
           <div class="col-4">
             Answers ({{ question.num_answers }})
