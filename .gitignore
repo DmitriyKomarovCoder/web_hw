@@ -1,0 +1,5 @@
+.idea
+workspace.xml
+venv
+.DS_Store
+db.sqlite3

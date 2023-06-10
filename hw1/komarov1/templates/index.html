@@ -1,0 +1,22 @@
+{% extends "inc/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="mt-5">
+    <div class="py-3 mb-3 border-bottom">
+        <h2 style="display: inline-block">New Question</h2>
+        <a href="{% url "hot" %}"> Hot Question</a>
+    </div>
+
+    {% for question in questions %}
+        {% include "inc/question_item.html" %}
+
+    {% endfor %}
+
+</div>
+
+{% include "inc/pagination.html" with object_paginator=questions%}
+<script src="{% static 'js/code.jquery.com_jquery-3.7.0.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock content %}

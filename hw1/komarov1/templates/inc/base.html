@@ -1,0 +1,96 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en" class="h-100">
+    <head>
+      <meta charset="utf-8">
+
+      <title>Ask me</title>
+      <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+
+      <!— Custom styles for this template —>
+      <link rel="stylesheet" href="{% static "css/my.css" %}">
+    </head>
+    <body class="d-flex flex-column h-100">
+
+  <header>
+    <!— Fixed navbar —>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fs-3" href="{% url "index" %}">Ask me!</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <form class="d-flex mx-left col-4" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">ASK</button>
+          </form>
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            {% if user.is_authenticated == True %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src={{ user.profile.avatar.url }} alt="Avatar" class="rounded-circle" width="50" height="50">
+                  {{ user.username }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{% url "settings" %}">Settings</a></li>
+                  <li><a class="dropdown-item" href="{% url "ask" %}">Ask</a></li>
+                  <li><a class="dropdown-item" href="{% url "logout" %}">Log Out</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <div class="navbar-nav ms-auto mb-2 mb-md-0">
+                <a href={% url "login" %}><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+                <a href={% url "register" %}><button type="button" class="btn btn-success">Register</button></a>
+              </div>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!— Begin page content —>
+  <main class="flex-shrink-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-9">
+
+            {% block content %}{% endblock content %}
+
+        </div>
+        <div class="col-3 mt-5">
+
+          <div class="p-3">
+
+            <h3 class="font-italic">Popular Tags</h3>
+            <ol class="list-unstyled">
+                {% for tag in tags %}
+                <li><a href="{% url "tag" tag.name %}">{{ tag.name }}</a></li>
+                {% endfor %}
+            </ol>
+          </div>
+          <div class="p-3">
+            <h4>Best Members</h4>
+            <ol class="list-unstyled">
+              {% for best_member in best_members %}
+              <li><a href="#"> {{ best_member.name }}</a></li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+      <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+  </footer>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

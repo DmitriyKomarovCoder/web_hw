@@ -1,0 +1,15 @@
+{% extends "inc/base.html" %}
+
+{% block content %}
+<div class="mt-5">
+    <div class="py-3 mb-3 border-bottom">
+        <h2 style="display: inline-block">Tags: {{ tag }}</h2>
+    </div>
+        {% for question in questions %}
+            {% include "inc/question_item.html" %}
+        {% endfor %}
+
+</div>
+{% include "inc/pagination.html" with object_paginator=questions%}
+
+{% endblock content %}
