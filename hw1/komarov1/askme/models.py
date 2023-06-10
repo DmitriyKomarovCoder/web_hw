@@ -38,24 +38,23 @@ import psycopg2
 class QuestionManager(models.Manager):
     def get_id(self, id):
         try:
-            question = Question.objects.annotate(num_answers=Count('answer')).prefetch_related('author', 'tag').get(id=id)
+            question = Question.objects.annotate(num_answers=Count('answer')).get(id=id)
         except ObjectDoesNotExist:
             raise Http404
         return question
     def new(self):
-        questions = Question.objects.annotate(num_answers=Count('answer')).prefetch_related('author', 'tag').order_by(
+        questions = Question.objects.annotate(num_answers=Count('answer')).order_by(
             '-date_create')
         return questions
 
     def get_tag(self, tag_name):
         try:
-            tag = Tag.objects.get(name=tag_name)
-            return self.filter(tag=tag).order_by('-date_create')
+            return self.filter(tag__name=tag_name).order_by('-date_create') # self.filter(tags=tag).order_by('-date_create') filter.contains
         except Tag.DoesNotExist:
             return None
 
     def get_popular(self):
-        return Question.objects.annotate(num_answers=Count('answer')).prefetch_related('author', 'tag').order_by(
+        return Question.objects.annotate(num_answers=Count('answer')).order_by(
             '-score')
 class TagManager(models.Manager):
     def most_popular(self):
@@ -122,7 +121,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     last_update = models.DateTimeField(auto_now=True)
-    avatar = models.ImageField(upload_to='static/img', default='static/img/avatar2.png')
+    avatar = models.ImageField(blank=True, null=True, upload_to='avatars/%Y/%m/%d/', default='avatar2.png')
     score = models.IntegerField(default=0)
 
     def __str__(self):

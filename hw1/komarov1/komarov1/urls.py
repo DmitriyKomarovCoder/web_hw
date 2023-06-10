@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from askme import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'askme'
 
@@ -33,5 +35,9 @@ urlpatterns = [
     path('logout/', views.log_out, name="logout"),
     path('register/', views.register, name="register"),
     path('ask/', views.ask, name="ask"),
-    path('settings/', views.settings, name="settings")
+    path('settings/', views.settings, name="settings"),
+    path('vote_up/', views.vote_up, name='vote_up')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,11 +1,15 @@
+import json
 from django.urls import reverse
-
+from django.views.decorators.http import require_POST
+from django.forms import model_to_dict
 from django.contrib import auth
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound
+from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.http import require_http_methods
 
 from .forms import LoginForm, RegistrationForm, AnswerForm, QuestionForm, SettingsForm
 from .models import Profile, Question, Answer, Tag, LikeQuestion, LikeAnswer
@@ -73,8 +77,8 @@ def tag(request, name_tag):
 
 def log_in(request):
     if request.method == 'GET':
-        login_form = LoginForm()
-
+        login_form = LoginForm(request.GET.get('next'))
+        print("Выводим параметр", request.GET)
     elif request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -115,7 +119,7 @@ def register(request):
                'form': user_form}
     return render(request, "register.html", context)
 
-@login_required
+@login_required(login_url='login')
 def ask(request):
     if request.method == 'GET':
         question_form = QuestionForm()
@@ -132,12 +136,14 @@ def ask(request):
     return render(request, "ask.html", context)
 
 @login_required
+@require_http_methods(['GET', 'POST'])
 def settings(request):
-    profile = request.user.profile
+    #profile = request.user.profile
     if request.method == 'GET':
-        settings_form = SettingsForm(instance=profile)
+        data = model_to_dict(request.user)
+        settings_form = SettingsForm(initial=data)
     if request.method == 'POST':
-        settings_form = SettingsForm(request.POST, instance=profile)
+        settings_form = SettingsForm(request.POST, files=request.FILES, instance=request.user)
         if settings_form.is_valid():
             settings_form.save()
             return redirect('settings')
@@ -159,3 +165,17 @@ def paginate(objects_list, request, per_page=5):
     except EmptyPage:
         objects_page = paginator.page(paginator.num_pages)
     return objects_page
+
+@login_required
+@require_POST
+def vote_up(request):
+    question_id = request.POST['question_id']
+    question = Question.objects.get(id=question_id)
+    question.score += 1
+    question.save()
+
+    like = LikeQuestion.objects.create(question=question, user=request.user.profile)
+    like.save()
+    return JsonResponse({
+        'new_rating': question.score
+    })

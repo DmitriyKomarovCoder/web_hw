@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(min_length=4, widget=forms.PasswordInput)
+    next = forms.CharField(widget = forms.HiddenInput(), required = False)
 
 class RegistrationForm(forms.ModelForm):
     username = forms.CharField(max_length=30)
@@ -80,22 +81,20 @@ class QuestionForm(forms.ModelForm):
         fields = ['title', 'text', 'tags', 'tag']
 
 class SettingsForm(forms.ModelForm):
+    avatar = forms.ImageField(required=False)
     class Meta:
-        model = Profile
-        fields = ["name", "avatar"]
+        model = User
+        fields = ["username", "last_name", "first_name", "avatar"]
 
     def __init__(self, *args, **kwargs):
         super(SettingsForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs['placeholder'] = 'Enter your name'
-        self.fields['avatar'].widget.attrs['placeholder'] = 'Choose your avatar'
-
-        profile = kwargs.get('instance')
-        if profile:
-            self.fields['name'].initial = profile.name
-            self.fields['avatar'].initial = profile.avatar
+        #self.fields['last_name'].widget.attrs['placeholder'] = 'Enter your name'
+        #self.fields['avatar'].widget.attrs['placeholder'] = 'Choose your avatar'
 
     def save(self, commit=True):
-        profile = super(SettingsForm, self).save(commit=False)
-        if commit:
-            profile.save()
-        return profile
+        user = super().save(commit)
+
+        profile = user.profile
+        profile.avatar = self.cleaned_data['avatar']
+        profile.save()
+        return user

@@ -12,7 +12,7 @@
         <h2><a href="{% url "question" question.id %}">{{ question.title }}</a></h2>
         <div class="row">
           <div class="col-4">
-            Answers ({{ question.num_answers }})
+            Answers ({{ question.answer_set.count }})
           </div>
           <div class="col-6">
             Tags: {% for tag in question.tag.all %}<a href="{% url "tag" tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
@@ -22,9 +22,9 @@
       </div>
       <div class="col-1 ml-3" >
           <div class="btn-group-vertical" role="group" aria-label="rating">
-            <button type="button" class="btn btn-outline-success btn-sm">+</button>
-            <input type="text" readonly class="form-control-plaintext border-dark" value={{ question.score }}>
-            <button type="button" class="btn btn-outline-danger btn-sm">-</button>
+            <button type="button" class="btn btn-outline-success btn-sm button-like" data-id="{{ question.id }}">+</button>
+            <input type="text" readonly class="form-control-plaintext border-dark score-value" data-id="{{ question.id }}" value={{ question.score }}>
+            <button type="button" class="btn btn-outline-danger btn-sm button-dislike">-</button>
         </div>
 
       </div>
